@@ -53,7 +53,13 @@ export function ProductCard({
 
         {product.stock < 10 && product.stock > 0 && (
           <span className="absolute top-2 left-2 bg-accent text-accent-foreground text-xs font-medium px-2 py-1 rounded">
-            Son {product.stock} {product.unit}
+            Son {product.stock} adet
+          </span>
+        )}
+
+        {product.original_price && product.original_price > product.price && (
+          <span className="absolute bottom-2 left-2 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded">
+            %{Math.round((1 - product.price / product.original_price) * 100)} indirim
           </span>
         )}
       </div>
@@ -66,11 +72,13 @@ export function ProductCard({
         <div className="flex items-center justify-between">
           <div>
             <span className="text-lg font-bold text-primary">
-              {product.price.toFixed(2)} TL
+              {product.price.toLocaleString('tr-TR')} TL
             </span>
-            <span className="text-xs text-muted-foreground ml-1">
-              / {product.unit}
-            </span>
+            {product.original_price && product.original_price > product.price && (
+              <span className="text-xs text-muted-foreground line-through ml-2">
+                {product.original_price.toLocaleString('tr-TR')} TL
+              </span>
+            )}
           </div>
         </div>
 
